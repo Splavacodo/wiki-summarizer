@@ -8,13 +8,11 @@ from heapq import nlargest
 
 class FrequencySummarizer:
     def __init__(self,min_cut=0.1,max_cut=0.9):
-        #__init__ is a contructor and the function will be called each time an object is created/instantiated
         self._min_cut = min_cut
         self._max_cut = max_cut
-        #The variables above are member variabes since there are assigned to 'self' as well as an _ as the first char
         self._stopwords = set(stopwords.words('english') + list(punctuation))
     def _compute_frequencies(self, word_sent):
-        #This method will take in a list of sentences, and output a dictionary wher the keys are words, and the values 
+        #This method will take in a list of sentences, and output a dictionary where the keys are words, and the values 
         #are frequencies of those words in the set of sentences
         freq = defaultdict(int)
         #defaultdict is a class that inherits from dictionary which prevents KeyError from occuring
@@ -36,13 +34,12 @@ class FrequencySummarizer:
         sents = sent_tokenize(text)
         #split text into a list of sentences
         assert n <= len(sents)
-        #'assert' is used to make sure a condition hold true, else an exception is thrown. This specific code makes sure
+        #'assert' is used to make sure a condition holds true, else an exception is thrown. This specific code makes sure
         #that the summary isn't longer the the article
         word_sent = [word_tokenize(s.lower()) for s in sents]
         self._freq = self._compute_frequencies(word_sent)
         ranking = defaultdict(int)
         for i,sent in enumerate(word_sent):
-            #This for loop is different since it uses a built-in function called enumerate and gains a list of tuples
             for w in sent: 
                 if w in self._freq:
                     ranking[i] += self._freq[w]
